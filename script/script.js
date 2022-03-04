@@ -15,6 +15,8 @@ Dopo che sono stati inseriti i 5 numeri, il software dice quanti e quali dei num
 
 let arrRandomNum = [];
 let arrCorrectNum =[];
+let arrWrongNum = [];
+let arrUserNum = [];
 let randomNum;
 let wrongNum=0;
 let userChoice;
@@ -34,20 +36,42 @@ console.log(arrRandomNum);
 setTimeout(emptyScreenFunction, 2000);
 function emptyScreenFunction(){
 
-    // alert(arrRandomNum);
+    // PULISCO LO SCHERMO
     console.log('');
+
+    // CICLO FOR PER CHIEDERE ALL'UTENTE QUALI ERANO I NUMERI
     for(n=0;n<5;n++){
+        // CHIEDI QUALE ERA IL NUMERO (IN POSIZIONE N), CON CONTROLLO DI INSERIMENTO SOLO NUMERI
+        
         userChoice = parseInt(prompt(`quale era il ${n+1}° numero?`));
+        while(isNaN(userChoice)){
+            alert('Devi inserire un numero');
+            userChoice = parseInt(prompt(`quale era il ${n+1}° numero?`));
+        }  
+       
+        arrUserNum.push(userChoice);
+
+        // SE LA SCELTA DELL'UTENTE E' UGUALE AL NUMERO IN POSIZIONE N DELL'ARRAY DEI NUMERI CASUALI ALLORA AUMENTA IL CONTATORE WRONGNUM
         if (userChoice!= arrRandomNum[n]){
                 wrongNum++;
-                // console.log(wrongNum) 
-        } else {
+                arrWrongNum.push(userChoice);
+                // console.log(wrongNum)      
+        }
+        // ALLTRIMENTI AUMENTA IL CONTATORE CORRECTNUM E INSERISCI IL NUMERO NELL'ARRAY DEI NUMERI CORRETTI
+        else {
             correctNum++;
             arrCorrectNum.push(userChoice);
-        
         }
     }
-    console.log(wrongNum);
-    console.log(`Hai individuato ${correctNum} numeri.
-Hai sbagliato ${wrongNum} numeri.`);
+   
+    for (l=0; l<5; l++) {
+        if (arrRandomNum[l]== arrUserNum[l]){
+            console.log(`Il ${l+1}° num. era ${arrRandomNum[l]}, l'utente ha selezionato ${arrUserNum[l]} HAI INDOVINATO`);
+        } else {
+            console.log(`Il ${l+1}° num. era ${arrRandomNum[l]}, l'utente ha selezionato ${arrWrongNum[l]} NON HAI INDOVINATO`);
+        }
+    }
+    console.log(`Hai indovinato ${correctNum} numeri.
+Hai sbagliato ${wrongNum} numeri.
+`);
 }
