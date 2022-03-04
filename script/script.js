@@ -14,22 +14,40 @@ Dopo che sono stati inseriti i 5 numeri, il software dice quanti e quali dei num
 -ALLA FINE DELLA FOR STAMPA IL CONTATORE NUMERI SBAGLIATI E DIGLI QUALI SONO QUELLI GIUSTI*/
 
 let arrRandomNum = [];
-let randomNum
+let arrCorrectNum =[];
+let randomNum;
+let wrongNum=0;
+let userChoice;
+let correctNum=0;
 for (i=0; i<5; i++){
     // let randomNum;
-    do {
+    do { /* FIXME: NON FUNZIONA*/
         randomNum = (Math.floor(Math.random() * (100 - 1)));
     } while (arrRandomNum.includes(randomNum));
     arrRandomNum.push(Math.floor(Math.random() * (100 - 1)));
     // alert(arrRandomNum);
 }
+/*STAMPO I NUMERI CASUALI*/ 
 console.log(arrRandomNum);
 
-
+/*CHIAMO LA FUNZIONE CHE LI FA SPARIRE DOPO 2 SECONDI*/
 setTimeout(emptyScreenFunction, 2000);
-
 function emptyScreenFunction(){
-    // alert(arrRandomNum);
 
+    // alert(arrRandomNum);
     console.log('');
+    for(n=0;n<5;n++){
+        userChoice = parseInt(prompt(`quale era il ${n+1}° numero?`));
+        if (userChoice!= arrRandomNum[n]){
+                wrongNum++;
+                // console.log(wrongNum) 
+        } else {
+            correctNum++;
+            arrCorrectNum.push(userChoice);
+        
+        }
+    }
+    console.log(wrongNum);
+    console.log(`Hai individuato ${correctNum} numeri.
+Hai sbagliato ${wrongNum} numeri.`);
 }
