@@ -21,6 +21,11 @@ let randomNum;
 let wrongNum=0;
 let userChoice;
 let correctNum=0;
+const containerNum = document.getElementById('output')
+let corrOutput = document.createElement('div');
+let wrongOutput = document.createElement('div');
+
+
 for (i=0; i<5; i++){
     // let randomNum;
     do { /* FIXME: NON FUNZIONA*/
@@ -30,14 +35,18 @@ for (i=0; i<5; i++){
     // alert(arrRandomNum);
 }
 /*STAMPO I NUMERI CASUALI*/ 
+containerNum.append(arrRandomNum);
 console.log(arrRandomNum);
 
-/*CHIAMO LA FUNZIONE CHE LI FA SPARIRE DOPO 2 SECONDI*/
-setTimeout(emptyScreenFunction, 2000);
-function emptyScreenFunction(){
+setTimeout(delayClean, 2950);
 
-    // PULISCO LO SCHERMO
-    console.log('');
+// FUNZIONE CHE PULISCE LO SCHERMO POCO PRIMA DELLA RICHIESTA INPUT CON PROMPT
+function delayClean() {
+    containerNum.innerHTML= '';
+}
+/*CHIAMO LA FUNZIONE CHE LI FA SPARIRE DOPO 3 SECONDI*/
+setTimeout(emptyScreenFunction, 3000);
+function emptyScreenFunction(){
 
     // CICLO FOR PER CHIEDERE ALL'UTENTE QUALI ERANO I NUMERI
     for(n=0;n<5;n++){
@@ -51,7 +60,7 @@ function emptyScreenFunction(){
        
         arrUserNum.push(userChoice);
 
-        // SE LA SCELTA DELL'UTENTE E' UGUALE AL NUMERO IN POSIZIONE N DELL'ARRAY DEI NUMERI CASUALI ALLORA AUMENTA IL CONTATORE WRONGNUM
+        // SE LA SCELTA DELL'UTENTE E' DIVERSO DAL NUMERO IN POSIZIONE N DELL'ARRAY DEI NUMERI CASUALI ALLORA AUMENTA IL CONTATORE WRONGNUM E AGGIUNGI IL NUMERO ALL'ARRAY DEI NUMERI SBAGLIATI
         if (userChoice!= arrRandomNum[n]){
                 wrongNum++;
                 arrWrongNum.push(userChoice);
@@ -63,15 +72,33 @@ function emptyScreenFunction(){
             arrCorrectNum.push(userChoice);
         }
     }
-   
+    // let divTest = document.createElement('div');
+    // divTest= arrRandomNum;
+    // divNum.append(divTest)
+
     for (l=0; l<5; l++) {
-        if (arrRandomNum[l]== arrUserNum[l]){
-            console.log(`Il ${l+1}° num. era ${arrRandomNum[l]}, l'utente ha selezionato ${arrUserNum[l]} HAI INDOVINATO`);
+        // let output = document.createElement('div');
+        if (arrRandomNum [l]== arrUserNum[l]){
+            // let output = document.createElement('div');
+            // liTest= document.createElement('li');
+            // divTest = 
+            // containerNum.append(divTest);
+
+             corrOutput = `\n Il ${l+1}° num. era ${arrRandomNum[l]}, l'utente ha selezionato ${arrUserNum[l]} HAI INDOVINATO \n`;
+            containerNum.append(corrOutput);
+            // console.log(`Il ${l+1}° num. era ${arrRandomNum[l]}, l'utente ha selezionato ${arrUserNum[l]} HAI INDOVINATO`);
         } else {
-            console.log(`Il ${l+1}° num. era ${arrRandomNum[l]}, l'utente ha selezionato ${arrWrongNum[l]} NON HAI INDOVINATO`);
+            // output = document.createElement('div');
+            wrongOutput = `\n Il ${l+1}° num.\n era ${arrRandomNum[l]}, l'utente ha selezionato ${arrWrongNum[l]} NON HAI INDOVINATO \n`;
+            containerNum.append(wrongOutput);
+
+            // console.log(`Il ${l+1}° num. era ${arrRandomNum[l]}, l'utente ha selezionato ${arrWrongNum[l]} NON HAI INDOVINATO`);
         }
     }
-    console.log(`Hai indovinato ${correctNum} numeri.
-Hai sbagliato ${wrongNum} numeri.
-`);
+    const finalOutput = `\n Hai indovinato ${correctNum} numeri.
+    Hai sbagliato ${wrongNum} numeri.`;
+    containerNum.append(finalOutput)
+//     console.log(`Hai indovinato ${correctNum} numeri.
+//     Hai sbagliato ${wrongNum} numeri.
+// `);
 }
